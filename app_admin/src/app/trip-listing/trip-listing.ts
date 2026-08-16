@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TripCardComponent } from '../trip-card/trip-card';
 import { trips } from '../data/trips';
@@ -20,7 +20,9 @@ export class TripListingComponent implements OnInit {
   trips!: Trip[];
   message: string = '';
 
-  constructor(private tripDataService: TripDataService, private router: Router) {
+  constructor(private tripDataService: TripDataService,
+              private router: Router,
+              private changeDetectorRef: ChangeDetectorRef) {
     console.log('trip-listing constructor');
   }
 
@@ -40,6 +42,8 @@ export class TripListingComponent implements OnInit {
             this.message = 'there were no trips retreived from the database.';
           }
           console.log(this.message);
+
+          this.changeDetectorRef.detectChanges();
         },
         error: (error: any) => {
           console.log('Error: ' + error);
