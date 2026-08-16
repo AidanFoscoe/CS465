@@ -36,9 +36,9 @@ export class AuthenticationService {
     // NOTE: For this application we have decided that we will name
     // the key for our token 'travlr-token'
     public saveToken(token: string): void {
-    console.log('SAVING TOKEN');
+    //console.log('SAVING TOKEN');
     this.storage.setItem('travlr-token', token);
-    console.log('TOKEN AFTER SAVE:', this.storage.getItem('travlr-token'));
+    //console.log('TOKEN AFTER SAVE:', this.storage.getItem('travlr-token'));
     }
 
     // Logout of our application and remove the JWT from Storage
@@ -51,19 +51,11 @@ export class AuthenticationService {
     // reauthenticate if the token has expired
     public isLoggedIn(): boolean {
         const token: string = this.getToken();
-
-        console.log('AuthenticationService::isLoggedIn');
-        console.log('Token:', token);
-
         if (token) {
             const payload = JSON.parse(atob(token.split('.')[1]));
-            console.log('Token is valid:', payload.exp > (Date.now() / 1000));
-
             return payload.exp > (Date.now() / 1000);
         } else {
-            console.log('No token found');
             return false;
-    
         }
     }
     // Retrieve the current user. This function should only be called
@@ -80,22 +72,21 @@ export class AuthenticationService {
     // result and only process when the Observable condition is satisfied
     // Uncomment the two console.log messages for additional debugging
     // information.
-    public login(user: User, passwd: string) : void {
-        this.tripDataService.login(user,passwd)
-            .subscribe({
-                next: (value: any) => {
-                    if(value)
-                    {
-                        console.log(value);
-                        this.authResp = value;
-                        this.saveToken(this.authResp.token);
-                    }
-                },
-                error: (error: any) => {
-                    console.log('Error: ' + error);
+    public login(user: User, passwd: string): void {
+    this.tripDataService.login(user, passwd)
+        .subscribe({
+            next: (value: any) => {
+                if(value) {
+                    console.log(value);
+                    this.authResp = value;
+                    this.saveToken(this.authResp.token);
                 }
-            })
-    }
+            },
+            error: (error: any) => {
+                console.log('Error: ' + error);
+            }
+        });
+}
 
     // Register method that leverages the register method in
     // tripDataService

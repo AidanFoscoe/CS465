@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthenticationService } from '../services/authentication';
@@ -13,24 +13,14 @@ import { RouterModule } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   constructor(
-    private authenticationService: AuthenticationService,
-    private cdr: ChangeDetectorRef
-  ) { 
-    //console.log('NAVBAR CONSTRUCTOR RUNNING');
-  }
+    private authenticationService: AuthenticationService
+  ) { }
   
-  ngOnInit() {
-  setTimeout(() => {
-    this.cdr.detectChanges();
-  });
-}
+  ngOnInit() { }
 
   public isLoggedIn(): boolean {
-    const result = this.authenticationService.isLoggedIn();
-    console.log('NAVBAR RESULT:', result);
-    console.log('NAVBAR TOKEN:', this.authenticationService.getToken());
-    return result;
-}
+    return this.authenticationService.isLoggedIn();
+  }
 
   public onLogout(): void {
     return this.authenticationService.logout();

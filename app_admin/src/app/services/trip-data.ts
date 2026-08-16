@@ -14,7 +14,7 @@ import { Trip } from '../models/trip';
 export class TripDataService {
 
     constructor(private http: HttpClient,
-                @Inject(BROWSER_STORAGE) private storage: Storage
+    @Inject(BROWSER_STORAGE) private storage: Storage
     ) {}
     url = 'http://localhost:3000/api/trips';
     baseUrl = 'http://localhost:3000/api';
